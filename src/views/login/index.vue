@@ -1,27 +1,29 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+    <!-- model：表达数据对象  rules：表单验证规则  label-position：表单域标签位置 -->
+    <el-form ref="loginForm" :model="loginForm" :rules="fieldRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">Antz框架XXX管理系统</h3>
+        <h3 class="title">请登陆</h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="useraccount">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
+          ref="useraccount"
+          v-model="loginForm.useraccount"
+          placeholder="用户账号"
+          name="useraccount"
           type="text"
           tabindex="1"
           autocomplete="on"
         />
       </el-form-item>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+      <el-tooltip v-model="capsTooltip" content="大写键已打开" placement="right" manual>
         <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon icon-class="password" />
@@ -31,7 +33,7 @@
             ref="password"
             v-model="loginForm.password"
             :type="passwordType"
-            placeholder="Password"
+            placeholder="用户密码"
             name="password"
             tabindex="2"
             autocomplete="on"
@@ -47,71 +49,57 @@
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
-      <div style="position:relative">
-        <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">Username : editor</span>
-          <span>Password : any</span>
-        </div>
-
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
-        </el-button>
-      </div>
     </el-form>
 
-    <el-dialog title="Or connect with" :visible.sync="showDialog">
-      Can not be simulated on local, so please combine you own business simulation! ! !
-      <br>
-      <br>
-      <br>
-      <social-sign />
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-import SocialSign from './components/SocialSignin'
+import { validUserAccount, validUserPassword } from '@/utils/validate'
 
 export default {
   name: 'Login',
-  components: { SocialSign },
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+    // 调用用户账户校验规则函数，进行用户账户校验，如果不需要可以屏蔽
+    const validateUserAccount = (rule, value, callback) => {
+      if (!validUserAccount(value)) {
+        callback(new Error('请输入正确的用户账号'))
       } else {
         callback()
       }
     }
+
+    // 调用用户密码校验规则函数，进行用户密码规则校验；
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+      const result = validUserPassword(value)
+      if (!result.pass) {
+        callback(new Error(result.message))
       } else {
         callback()
       }
     }
+
     return {
+      // 表单数据
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        useraccount: '',
+        password: ''
       },
-      loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+
+      // 与elment-form的校验规则配合使用，设置input项的校验规则，通过自定规则方式进行规则设置；
+      fieldRules: {
+        useraccount: [{ required: true, trigger: 'blur', validator: validateUserAccount }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
+
       passwordType: 'password',
       capsTooltip: false,
       loading: false,
-      showDialog: false,
       redirect: undefined,
       otherQuery: {}
     }
   },
+  // 监控当前路由对象
   watch: {
     $route: {
       handler: function(route) {
@@ -124,24 +112,21 @@ export default {
       immediate: true
     }
   },
-  created() {
-    // window.addEventListener('storage', this.afterQRScan)
-  },
+  // 在组件完成挂载后，根据loginForm中“用户账户或密码”是否为空进行焦点设置
   mounted() {
-    if (this.loginForm.username === '') {
-      this.$refs.username.focus()
+    if (this.loginForm.useraccount === '') {
+      this.$refs.useraccount.focus()
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
   },
-  destroyed() {
-    // window.removeEventListener('storage', this.afterQRScan)
-  },
   methods: {
+    // 检查大写键是否已经开启
     checkCapslock(e) {
       const { key } = e
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
     },
+    // 控制用户密码是否可视
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -152,6 +137,7 @@ export default {
         this.$refs.password.focus()
       })
     },
+    // 处理用户登陆
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
@@ -178,24 +164,6 @@ export default {
         return acc
       }, {})
     }
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
   }
 }
 </script>
