@@ -1,7 +1,13 @@
+//  Vue-cli3.0之后，cli生成的项目采用零配置默认模式。
+//  因此，要配置相关的选择，则使用vue.config.js文件方式；
+
 'use strict'
 const path = require('path')
+
+// ./src的setting文件中，记录了项目默认的配置信息；
 const defaultSettings = require('./src/settings.js')
 
+// 获得dir的绝对路径信息；
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
