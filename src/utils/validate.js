@@ -20,6 +20,11 @@ export function validUserAccount(str) {
   return valid_map.indexOf(str.trim()) >= 0
 }
 
+/**
+ * 校验用户密码是否符合规则
+ * @param {string} str
+ * @returns {pass,message}
+ */
 export function validUserPassword(str) {
   if (str.length < 8) {
     return { pass: false, message: '用户密码长度不能少于8个字符' }
@@ -29,6 +34,7 @@ export function validUserPassword(str) {
 }
 
 /**
+ * 建议是否合法URL
  * @param {string} url
  * @returns {Boolean}
  */
@@ -38,6 +44,7 @@ export function validURL(url) {
 }
 
 /**
+ * 校验是否全部都是小写字母
  * @param {string} str
  * @returns {Boolean}
  */
@@ -47,6 +54,7 @@ export function validLowerCase(str) {
 }
 
 /**
+ * 校验是否全部是大写字母
  * @param {string} str
  * @returns {Boolean}
  */
@@ -56,6 +64,7 @@ export function validUpperCase(str) {
 }
 
 /**
+ * 校验是否全部是英文字母
  * @param {string} str
  * @returns {Boolean}
  */
@@ -65,6 +74,7 @@ export function validAlphabets(str) {
 }
 
 /**
+ * 校验是否是合法的电子邮件地址
  * @param {string} email
  * @returns {Boolean}
  */
@@ -74,6 +84,7 @@ export function validEmail(email) {
 }
 
 /**
+ * 校验参数是否string类型
  * @param {string} str
  * @returns {Boolean}
  */
@@ -85,6 +96,7 @@ export function isString(str) {
 }
 
 /**
+ * 校验参数是否数组类型
  * @param {Array} arg
  * @returns {Boolean}
  */
