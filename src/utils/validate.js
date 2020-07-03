@@ -11,12 +11,21 @@ export function isExternal(path) {
 }
 
 /**
+ * 校验用户账号是否存在
  * @param {string} str
  * @returns {Boolean}
  */
-export function validUsername(str) {
+export function validUserAccount(str) {
   const valid_map = ['admin', 'editor']
   return valid_map.indexOf(str.trim()) >= 0
+}
+
+export function validUserPassword(str) {
+  if (str.length < 8) {
+    return { pass: false, message: '用户密码长度不能少于8个字符' }
+  } else {
+    return { pass: true, message: '' }
+  }
 }
 
 /**
