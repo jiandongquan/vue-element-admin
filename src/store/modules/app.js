@@ -1,3 +1,5 @@
+// 本文件中保存了所有APP基本的状态信息；
+
 import Cookies from 'js-cookie'
 
 const state = {

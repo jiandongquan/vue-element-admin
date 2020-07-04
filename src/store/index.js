@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
 
+// 加载vuex，启用全局状态管理器
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext

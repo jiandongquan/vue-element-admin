@@ -1,9 +1,9 @@
-import { validUsername, validURL, validLowerCase, validUpperCase, validAlphabets } from '@/utils/validate.js'
+import { validUserAccount, validURL, validLowerCase, validUpperCase, validAlphabets } from '@/utils/validate.js'
 describe('Utils:validate', () => {
   it('validUsername', () => {
-    expect(validUsername('admin')).toBe(true)
-    expect(validUsername('editor')).toBe(true)
-    expect(validUsername('xxxx')).toBe(false)
+    expect(validUserAccount('admin')).toBe(true)
+    expect(validUserAccount('editor')).toBe(true)
+    expect(validUserAccount('xxxx')).toBe(false)
   })
   it('validURL', () => {
     expect(validURL('https://github.com/PanJiaChen/vue-element-admin')).toBe(true)
