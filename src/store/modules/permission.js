@@ -1,7 +1,8 @@
+// 本模块用于管理所有与权限相关的状态信息；
 import { asyncRoutes, constantRoutes } from '@/router'
 
 /**
- * Use meta.role to determine if the current user has permission
+ * 通过传入路由对象的元数据内角色信息（route.meta.role)去判断用户是否有权限；
  * @param roles
  * @param route
  */
@@ -30,7 +31,6 @@ export function filterAsyncRoutes(routes, roles) {
       res.push(tmp)
     }
   })
-
   return res
 }
 
@@ -39,6 +39,7 @@ const state = {
   addRoutes: []
 }
 
+// 同步方式修改状态值
 const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
@@ -46,7 +47,9 @@ const mutations = {
   }
 }
 
+// 异步方式修改状态值
 const actions = {
+  // 根据角色动态生成路由表
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
       let accessedRoutes

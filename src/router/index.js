@@ -34,12 +34,11 @@ import nestedRouter from './modules/nested'
  */
 
 /**
- * constantRoutes
- * a base page that does not have permission requirements
- * all roles can be accessed
+ * constantRoutes-常量路由
+ * 基础业务，没有权限要求，所有角色都可以访问
  */
 export const constantRoutes = [
-  {
+  { // 重定向页路由
     path: '/redirect',
     component: Layout,
     hidden: true,
@@ -50,27 +49,27 @@ export const constantRoutes = [
       }
     ]
   },
-  {
+  { // 登陆页路由
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
   },
-  {
+  { // 授权重定向路由
     path: '/auth-redirect',
     component: () => import('@/views/login/auth-redirect'),
     hidden: true
   },
-  {
+  { // 404错误页路由
     path: '/404',
     component: () => import('@/views/error-page/404'),
     hidden: true
   },
-  {
+  { // 401错误页路由
     path: '/401',
     component: () => import('@/views/error-page/401'),
     hidden: true
   },
-  {
+  { // 首页路由
     path: '/',
     component: Layout,
     redirect: '/dashboard',
@@ -83,7 +82,7 @@ export const constantRoutes = [
       }
     ]
   },
-  {
+  { // 文档页路由
     path: '/documentation',
     component: Layout,
     children: [
@@ -95,7 +94,7 @@ export const constantRoutes = [
       }
     ]
   },
-  {
+  { // 手册页路由
     path: '/guide',
     component: Layout,
     redirect: '/guide/index',
@@ -108,7 +107,7 @@ export const constantRoutes = [
       }
     ]
   },
-  {
+  { // 用户详情页路由
     path: '/profile',
     component: Layout,
     redirect: '/profile/index',
@@ -125,8 +124,8 @@ export const constantRoutes = [
 ]
 
 /**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
+ * asyncRoutes-异步路由
+ * 根据用户角色进行动态载入
  */
 export const asyncRoutes = [
   {

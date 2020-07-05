@@ -1,4 +1,7 @@
-/** When your routing table is too long, you can split it into small modules**/
+/**
+ * 本模块是有图标相关的路由信息；
+ * 说明：路由表太长的时候，可以分开到不同的js文件中，做成独立模块；
+ **/
 
 import Layout from '@/layout'
 
