@@ -1,3 +1,4 @@
+// 本模块用于为移动终端状态下窗口的缩放进行关闭侧边栏的操作；
 import store from '@/store'
 
 const { body } = document

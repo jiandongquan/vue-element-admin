@@ -1,13 +1,19 @@
 <template>
   <div :class="classObj" class="app-wrapper">
+    <!-- 移动端：选择菜单后，会关闭侧边栏 -->
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
+    <!--侧边栏-->
     <sidebar class="sidebar-container" />
     <div :class="{hasTagsView:needTagsView}" class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
+        <!-- 导航栏 -->
         <navbar />
+        <!-- tagsview -->
         <tags-view v-if="needTagsView" />
       </div>
+      <!-- 页面主显示区域 -->
       <app-main />
+      <!-- 右侧设置按钮 -->
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
@@ -24,13 +30,14 @@ import { mapState } from 'vuex'
 export default {
   name: 'Layout',
   components: {
-    AppMain,
-    Navbar,
-    RightPanel,
-    Settings,
-    Sidebar,
-    TagsView
+    AppMain, // 主显示区域
+    Navbar, // 导航栏区域
+    RightPanel, // 右侧设置按钮
+    Settings, // 设置面板及内容
+    Sidebar, // 侧边栏
+    TagsView // tagsview
   },
+  // 采用vue的混入模式，为layout做功能加强：在移动终端下进行窗口缩放时的关闭侧边栏处理；
   mixins: [ResizeMixin],
   computed: {
     ...mapState({
@@ -50,6 +57,7 @@ export default {
     }
   },
   methods: {
+    // 移动终端下用于在点击菜单后，关闭侧边栏
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
