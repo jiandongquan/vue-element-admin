@@ -4,15 +4,17 @@
     <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
     <!--面包屑导航-->
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
-
+    <!-- 右边菜单项 -->
     <div class="right-menu">
+      <!-- 非移动终端模式下，显示右边项的以下内容 -->
       <template v-if="device!=='mobile'">
+        <!-- 搜索按钮 -->
         <search id="header-search" class="right-menu-item" />
-
+        <!-- 错误日志按钮 -->
         <error-log class="errLog-container right-menu-item hover-effect" />
-
+        <!-- 全屏按钮 -->
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
-
+        <!-- 组件尺寸大小按钮：element-ui组件的全局大小 -->
         <el-tooltip content="Global Size" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
@@ -20,10 +22,12 @@
       </template>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+        <!-- 用户图标 -->
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
+        <!-- 用户相关设置菜单 -->
         <el-dropdown-menu slot="dropdown">
           <router-link to="/profile/index">
             <el-dropdown-item>Profile</el-dropdown-item>
