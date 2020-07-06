@@ -1,7 +1,8 @@
 <template>
   <div class="navbar">
+    <!-- 汉堡菜单（抽屉式菜单），控制侧边栏是否关闭 -->
     <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-
+    <!--面包屑导航-->
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
@@ -71,6 +72,7 @@ export default {
     ])
   },
   methods: {
+    // 转换侧边栏显示状态
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
